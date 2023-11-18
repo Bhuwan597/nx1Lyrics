@@ -24,8 +24,10 @@ export default async function middleware(request) {
         return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     } catch (error) {}
   }
-  if (path.startsWith("/api/user")) {
-    if(path === '/api/user/login' || path === '/api/user/logout') return console.log('Login or logout is called')
+  if (path.startsWith("/api")) {
+    if (path === "/api/user/login" || path === "/api/user/logout") return
+    if(path.startsWith('/api/lyrics') && (request.method === 'GET' || request.method === 'POST')) return
+    if(path.startsWith('/api/feedbacks') && request.method === 'POST' ) return
     const BearerToken = await request.headers.get("authorization");
     if (!BearerToken) {
       return NextResponse.json(
@@ -36,13 +38,18 @@ export default async function middleware(request) {
     try {
       const BearerTokenValue = BearerToken.split(" ")[1];
       const decoded = await verifyToken(BearerTokenValue);
-      if (!decoded.id) {
+      if (!decoded.payload.id) {
+        return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
       }
+      return
     } catch (error) {
       return NextResponse.json({ error: error.message }, { status: 401 });
     }
   }
 }
 export const config = {
-  matcher: ["/api/user/:path*", "/admin/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/:path*",
+  ],
 };

@@ -1,17 +1,18 @@
 import React from "react";
+import Logo from '../../public/logo.png'
+import Image from "next/image";
+import Link from 'next/link'
 const Nav = () => {
   return (<>
 <header class="text-gray-600 body-font bg-white">
   <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-2 md:mb-0 cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
+    <Link href="/" class="flex title-font font-medium items-center text-gray-900 mb-2 md:mb-0 cursor-pointer">
+      <Image width={60} height={60} src={Logo.src} />
       <span class="ml-3 text-xl">nx1Lyrics</span>
-    </a>
+    </Link>
     <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-      <a href="/submit-lyric" class="mr-5 cursor-pointer font-bold  hover:text-gray-900">Submit Lyrics</a>
-      <a href="/feedback" class="mr-5 cursor-pointer font-bold  hover:text-gray-900">Feedback</a>
+      <Link href="/submit-lyric" class="mr-5 cursor-pointer font-bold  hover:text-gray-900">Submit Lyrics</Link>
+      <Link href="/feedback" class="mr-5 cursor-pointer font-bold  hover:text-gray-900">Feedback</Link>
     </nav>
   </div>
 </header>

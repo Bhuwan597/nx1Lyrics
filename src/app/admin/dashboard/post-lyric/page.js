@@ -3,7 +3,7 @@ import LyricsForm from '@/components/adminComponents/LyricsForm'
 import axios from 'axios'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   async function handlePost(lyricsData){
     try {
       const token = JSON.parse(localStorage.getItem('adminInfo'))?.token
@@ -20,8 +20,9 @@ const page = () => {
   }
   }
   return <>
-    <LyricsForm name='post' action={handlePost}/>
+  <h1 className="text-2xl text-center m-10 capitalize">Post a Song Lyric</h1>
+    <LyricsForm editable={true} name='post' action={handlePost}/>
   </>
 }
 
-export default page
+export default Page

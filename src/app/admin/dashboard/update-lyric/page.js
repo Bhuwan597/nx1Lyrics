@@ -9,7 +9,7 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import LyricsSkeleton from '@/components/adminComponents/LyricsSkeleton'
 import LyricsListItem from "@/components/adminComponents/LyricsListItem";
@@ -22,14 +22,24 @@ const Page = () => {
   const [lyrics, setLyrics] = useState()
   const [search, setSearch] = useState()
 
-  function handleUpdate() {
-    console.log("Lyrics Updated");
+  async function handleUpdate(lyricsData,id) {
+    try {      
+      const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(`/api/lyrics?id=${id}`,lyricsData, config);
+      return data
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
-
-  const handleOnChange = async (search) => {
-    setSearch(search)
-    if (search.length < 2) return;
+useEffect(() => {
+  const timeout = setTimeout(async() => {
+    if (!search) return;
     setLoading(true);
     setShowResult(true)
     const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
@@ -41,7 +51,12 @@ const Page = () => {
     const { data } = await axios.get(`/api/lyrics?search=${search}`, config);
     setSearchResults(data)
     setLoading(false);
-  };
+    setSearch(search)
+  }, 1000);
+
+  return () => clearTimeout(timeout)
+}, [search])
+
 
 const selectLyrics = (lyrics)=>{
   setLyrics(lyrics)
@@ -50,6 +65,7 @@ const selectLyrics = (lyrics)=>{
 
 const closeWindow = ()=>{
   setShowResult(false)
+  setLyrics()
   setSearch('')
 }
 
@@ -64,7 +80,7 @@ const closeWindow = ()=>{
         alignItems={"center"}
         flexDir={'column'}
       >
-        <InputGroup width={{ md: "30%", sm: "40%" }}>
+        <InputGroup width={{ md: "60%", base: "100%" }}>
           <InputLeftElement
             pointerEvents="none"
             children={<Icon as={FaSearch} color="black" />}
@@ -73,7 +89,7 @@ const closeWindow = ()=>{
             type="text"
             placeholder="Search..."
             value={search}
-            onChange={(e) => handleOnChange(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
             borderColor={"teal"}
             borderRadius="full"
             _focus={{
@@ -85,14 +101,14 @@ const closeWindow = ()=>{
             children={<Icon as={CloseIcon} color="black" />}/>
         </InputGroup>
         
-             <Box zIndex={999} position={'absolute'} top={0} width={{sm:'100%',md:'30%'}} mt={'9vh'} px={3} maxHeight={'50vh'} overflowY={'scroll'}> 
+             <Box zIndex={999} position={'absolute'} top={0} width={{md: "60%", base: "100%"}} mt={{base:'7vh',md:'9vh'}} px={3} maxHeight={'50vh'} overflowY={'scroll'}> 
           {loading?<LyricsSkeleton/>:showResult && searchResults.map((lyrics)=>{
             return <LyricsListItem key={crypto.randomUUID} lyrics={lyrics} handleFunction={()=>selectLyrics(lyrics)} />
           })}
              </Box>
       
         </Box>
-      <LyricsForm lyricsData={lyrics} name="update" action={handleUpdate} />
+      <LyricsForm editable={false} lyricsData={lyrics} name="update" action={handleUpdate} />
     </>
   );
 };

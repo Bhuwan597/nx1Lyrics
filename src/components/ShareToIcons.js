@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -9,17 +9,49 @@ import {
   FaThumbsUp,
   FaThumbsDown,
 } from "react-icons/fa";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, useToast } from "@chakra-ui/react";
+import axios from "axios";
 
-const ShareToIcons = () => {
+const ShareToIcons = ({id}) => {
+  const [clicked, setClicked] = useState(false)
+  const toast = useToast()
+
+  async function handleClick(value){
+    setClicked(true)
+    try {
+      const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const {data} = await axios.patch('/api/lyrics',{value:value,id:id},config)
+      return toast({
+        title: "Thanks for the feedback!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   return (
     <>
-      <button className="fixed top-[47%] right-0 p-2 bg-blue-500 text-white text-xl">
-        <FaThumbsUp />
+    {!clicked && <>
+    <Tooltip label='Like this post'>
+      <button onClick={()=>handleClick(true)} className="fixed top-[47%] md:top-[45%] right-0 p-2 bg-blue-500 text-white text-xl hover:bg-white hover:text-blue-500">
+        <FaThumbsUp className="hover:scale-125 transition delay-75" />
       </button>
-      <button className="fixed top-[52%] right-0 p-2 bg-red-500 text-white text-xl">
-        <FaThumbsDown />
+    </Tooltip>
+    <Tooltip label='Dislike this post'>
+      <button onClick={()=>handleClick(false)} className="fixed top-[52%] right-0 p-2 bg-red-500 text-white text-xl hover:bg-white hover:text-red-500">
+        <FaThumbsDown className="hover:scale-125 transition delay-75"/>
       </button>
+      </Tooltip>
+    </>}
+
       <div className="container-fluid flex flex-col text-xl fixed left-0 top-[43%]">
       <Tooltip label='Share to Facebook'>
         <a

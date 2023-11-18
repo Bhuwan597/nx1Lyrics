@@ -1,166 +1,98 @@
-import React from 'react'
+"use client";
+import { Box, Button, Spinner } from "@chakra-ui/react";
+import LyricsSubmitRequest from "../../../../components/adminComponents/LyrisSubmitRequestList";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import crypto from "crypto";
 
-const page = () => {
-  return <>
-    <div class="bg-white py-10">
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">Lyrics Submit Requests</h2>
-    <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-      <article class="flex max-w-xl flex-col items-start justify-between">
-        <div class="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
-          <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Unpublished</a>
-        </div>
-        <div class="group relative">
-          <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span class="absolute inset-0"></span>
-              See you again by Charlie Puth and Wiz Khalifa
-            </a>
-          </h3>
-        </div>
-        <div class="relative mt-8 flex items-center gap-x-4">
-          <div class="text-sm leading-6">
-            <p class="font-semibold text-gray-900">
-              <a href="#">
-                <span class="absolute inset-0"></span>
-                Bhuwan Acharya
-              </a>
-            </p>
-            <p class="text-gray-600">v1acharya34@gmail.com</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</div>
+const Page = () => {
+  const [requests, setRequests] = useState([]);
+  const [fetchAgain, setFetchAgain] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  </>
-}
+  const getRequests = async () => {
+    setLoading(true);
+    const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        "/api/lyrics?search=submit-requests",
+        config
+      );
+      if (data) {
+        setRequests(data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default page
+  const fetchData = () => {
+    getRequests();
+  };
+
+  useEffect(() => {
+    fetchData();
+
+    return () => {
+      // Cleanup function
+      // This will be called when the component is unmounted
+      // You can add cleanup logic here if needed
+    };
+  }, [fetchAgain]);
+
+  return (
+    <>
+      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">
+        Lyrics Submit Requests
+      </h2>
+
+      {loading ? (
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          width={"100%"}
+          mt={30}
+        >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Box>
+      ) : (
+        <div className="bg-white py-10">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <Button
+              type="button"
+              colorScheme={"blue"}
+              onClick={() => setFetchAgain(!fetchAgain)}
+            >
+              Refresh Requests
+            </Button>
+            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+              {requests.map((lyrics) => (
+                <LyricsSubmitRequest
+                  key={crypto.randomBytes(20).toString("hex")}
+                  lyricsData={lyrics}
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Page;

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bytescale/upload-widget-react": "^4.12.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
@@ -21,6 +22,7 @@
     "jose": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
+    "mongoose-slug-updater": "^3.3.0",
     "next": "14.0.1",
     "nextjs-progressbar": "^0.0.16",
     "react": "^18",

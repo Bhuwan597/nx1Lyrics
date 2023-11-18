@@ -49,12 +49,17 @@ import { useRouter } from "next/navigation";
 import {addSinger} from '../../../utils/navbarFunctions'
 
 const AdminNavbar = () => {
+  let cacheUser='';
+  if (typeof window !== 'undefined') {
+     cacheUser = JSON.parse(localStorage?.getItem('adminInfo'))
+  }
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [loading, setLoading] = useState(false)
   const toast = useToast()
   const router = useRouter()
-
+  const [profile, setProfile] = useState(cacheUser)
+  
   const  handleLogout = async()=>{
     setLoading(true)
     try {
@@ -112,11 +117,11 @@ const AdminNavbar = () => {
               <Avatar
                 size="sm"
                 name={"Bhuwan Acharya"}
-                src={"fklsahfddkashf"}
+                src={profile?.picture}
               />
             </MenuButton>
             <MenuList display={'flex'} justifyContent={'center'} alignItems={'center'} flexDir={'column'} width={'100%'} padding={3}>
-            <AdminProfile>
+            <AdminProfile setProfile={setProfile}>
               Profile
             </AdminProfile>
               <MenuDivider />
@@ -144,6 +149,7 @@ const AdminNavbar = () => {
                 <Link
                   className="flex justify-center items-center mr-1 md:mr-3 text-sm md:text-base"
                   href={"/"}
+                  target="_blank"
                 >
                   <FaEye className="mr-1" />
                   Visit Site
@@ -220,7 +226,7 @@ const AdminNavbar = () => {
             my={4}
             gap={4}
           >
-            <Avatar size="md" name={"Bhuwan Acharya"} src={"fasjfkljsaklfjd"} />
+            <Avatar size="md" name={"Bhuwan Acharya"} src={""} />
             <Box>
               <Text fontSize={20} fontWeight={"bold"} ml="2">
                 {"Bhuwan Acharya"}

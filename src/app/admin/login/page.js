@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 import { useToast } from '@chakra-ui/react';
 
-const page = () => {
+const Page = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -21,14 +21,12 @@ const page = () => {
         password: password
       })
       localStorage.setItem('adminInfo', JSON.stringify(data))
-      setEmail(null)
-      setPassword(null)
       toast({
         title: "Login Successfull!",
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: "top-left",
+        position: "top-right",
       });
       router.push('/admin/dashboard')
     } catch (error) {
@@ -37,9 +35,11 @@ const page = () => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "top-left",
+        position: "top-right",
       });
     }
+    setEmail('')
+    setPassword('')
     setLoading(false)
   }
   return <>
@@ -53,11 +53,11 @@ const page = () => {
       <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Sign In</h2>
       <div className="relative mb-4">
         <label for="email" className="leading-7 text-sm text-gray-600">Email</label>
-        <input type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" onChange={(e)=> setEmail(e.target.value)}/>
+        <input value={email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" onChange={(e)=> setEmail(e.target.value)}/>
       </div>
       <div className="relative mb-4">
         <label for="password" className="leading-7 text-sm text-gray-600">Password</label>
-        <input type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" onChange={(e)=> setPassword(e.target.value)}/>
+        <input value={password} type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" onChange={(e)=> setPassword(e.target.value)}/>
       </div>
       <Button isLoading={loading} colorScheme={'teal'} onClick={handleLogin}>Login</Button>
       <p className="text-xs text-gray-500 mt-3">Support: v1acharya34@gmail.com</p>
@@ -67,4 +67,4 @@ const page = () => {
   </>
 }
 
-export default page
+export default Page

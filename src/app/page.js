@@ -19,7 +19,7 @@ export default async function Page() {
 
 export async function getPopularLyrics(){
   try {
-    const response = await fetch('http://localhost:3000/api/lyrics?search=popular')
+    const response = await fetch(`${process.env.HOST_URL}/api/lyrics?search=popular`)
     return await response.json()
   } catch (error) {
     return []

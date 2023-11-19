@@ -58,7 +58,7 @@ const RecentlyUploaded = async () => {
 };
 export async function getLatestLyrics() {
   try {
-    const response = await fetch("http://localhost:3000/api/lyrics");
+    const response = await fetch(`${process.env.HOST_URL}/api/lyrics`);
     return await response.json();
   } catch (error) {
     return [];

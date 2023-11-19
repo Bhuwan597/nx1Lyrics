@@ -241,6 +241,7 @@ const AddSingerModal = ({ handleFunction, children }) => {
                 {singerInfo.map((singer) => {
                   return (
                     <SingerListItem
+                    key={singer._id}
                       singer={singer}
                       handleFunction={() => handleSingerClick(singer)}
                     />

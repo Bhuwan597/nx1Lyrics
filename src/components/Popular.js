@@ -14,7 +14,7 @@ const Popular = ({ lyrics }) => {
           <div className="flex flex-wrap -m-4 justify-center">
             {lyrics.map((l) => {
               return (
-                <div className="lg:w-1/3 sm:w-1/2 p-4">
+                <div key={l._id} className="lg:w-1/3 sm:w-1/2 p-4">
                   <Link href={`/${l.slug}`} className="flex relative">
                     <img
                       alt="gallery"

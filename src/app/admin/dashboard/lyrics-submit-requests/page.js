@@ -13,37 +13,35 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [selectedLyrics, setSelectedLyrics] = useState("");
 
-  const getRequests = async () => {
-    setLoading(true);
-    const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const { data } = await axios.get(
-        "/api/lyrics?search=submit-requests",
-        config
-      );
-      if (data) {
-        setRequests(data);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const fetchData = () => {
-    getRequests();
-  };
+
+
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    fetchData();
-    return () => {};
+    const getRequests = async () => {
+      setLoading(true);
+      const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        const { data } = await axios.get(
+          "/api/lyrics?search=submit-requests",
+          config
+        );
+        if (data) {
+          setRequests(data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getRequests();
   }, [fetchAgain]);
 
   const handleEdit = async (lyricsData, id) => {

@@ -34,6 +34,7 @@ const Page = async ({ searchParams }) => {
               >
                 <Box className="flex justify-evenly items-center flex-col md:flex-row">
                   <Image
+                  alt={lyrics.title}
                     src={lyrics.coverPicture}
                     width={"200px"}
                     className="rounded"

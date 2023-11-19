@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "../../../../utils/mongodb_connect";
 import Feedbacks from "../../../models/feedback";
+import Notifications from "../../../models/notification";
 
  await connect();
 export async function GET(request) {
@@ -41,6 +42,12 @@ export async function POST(request) {
     };
     const formattedDateTime = dateTime.toLocaleString("en-US", options);
     const feedback = await Feedbacks.create({...data, date: formattedDateTime});
+    await Notifications.create({
+      notificationTitle: 'Feedback Message',
+      notificationDescription: `From: ${data.name} (${data.email})`,
+      date : formattedDateTime,
+      callbackUrl : '/admin/dashboard/feedbacks'
+    })
     return NextResponse.json(feedback, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });

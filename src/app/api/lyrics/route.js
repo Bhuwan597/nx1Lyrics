@@ -3,6 +3,7 @@ import connect from "../../../../utils/mongodb_connect";
 import Lyrics from "../../../models/lyric";
 import Singer from "../../../models/singer";
 import Users from "../../../models/user";
+import Notifications from "../../../models/notification";
 import verifyToken from "../../../../utils/verifyToken";
 
 await connect()
@@ -33,6 +34,14 @@ export async function POST(request) {
         postedOn : formattedDateTime,
     
       });
+      if(lyricsData.referenceName || lyricsData.referenceEmail || lyricsData.singerReference){
+        await Notifications.create({
+          notificationTitle: 'Lyrics Request',
+          notificationDescription: `From ${lyricsData.referenceName } (${lyricsData.referenceEmail })`,
+          date : formattedDateTime,
+          callbackUrl : '/admin/dashboard/lyrics-submit-requests'
+        })
+      }
       return NextResponse.json(lyrics, {status: 201})
   } catch (error) {
     return NextResponse.json({error: error.message}, {status: 400})
@@ -132,7 +141,6 @@ export async function PATCH (request){
     }:{
       $inc : {'dislikes' : 1}
     }
-    console.log(toUpdate)
     const updatedData = await Lyrics.findByIdAndUpdate(id, toUpdate,{newDocument:true})
     return NextResponse.json(updatedData,{status:200})
   } catch (error) {

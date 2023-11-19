@@ -14,6 +14,8 @@ export async function POST(request) {
   if(!userData){
       return NextResponse.json({error: "All fields are required."}, {status: 400})
     }
+
+  if(!userData.secret || userData.secret !== process.env.USER_SECRET) return  NextResponse.json({error: "Fuck you!"}, {status: 401})
   const dateTime = new Date();
   const options = {
     day: "2-digit",
@@ -23,7 +25,6 @@ export async function POST(request) {
     minute: "numeric",
     hour12: true,
   };
-
   const formattedDateTime = dateTime.toLocaleString("en-US", options);
   try {    
        let user = await User.create({

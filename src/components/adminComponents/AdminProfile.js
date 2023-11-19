@@ -41,7 +41,6 @@ const AdminProfile = ({ setProfile, children }) => {
       },
     };
     const { data } = await axios.get(`/api/user/${id}`, config);
-    console.log(data);
     if (data) {
       setProfile(data);
       setUserProfile(data);

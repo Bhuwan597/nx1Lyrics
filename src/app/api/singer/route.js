@@ -18,10 +18,20 @@ export async function GET(request){
     const keywords = {
         $or : [
             { fullName: { $regex: search, $options: 'i' } },
-            { nickName: { $regex: search, $options: 'i' } },
-            { nationality: { $regex: search, $options: 'i' } },
+            { nickName: { $regex: search, $options: 'i' } }
     ]
     }
     const singers = await Singer.find(keywords).limit(5)
     return NextResponse.json(singers, {status:200})
+}
+
+export async function PATCH (request){
+    try {
+        const singerData = await request.json()
+        const singerId =  await request.headers.get("id");
+        const singer = await Singer.findByIdAndUpdate(singerId, singerData, {newDocument: true})
+        return NextResponse.json(singer, {status:200})
+    } catch (error) {
+        return NextResponse.json({error:error.message}, {status:400})
+    }
 }

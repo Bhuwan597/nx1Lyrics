@@ -1,14 +1,17 @@
 "use client";
-import { Box, Button, Spinner } from "@chakra-ui/react";
+import { Box, Button, Spinner, Stack } from "@chakra-ui/react";
 import LyricsSubmitRequest from "../../../../components/adminComponents/LyrisSubmitRequestList";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import crypto from "crypto";
+import LyricsForm from "@/components/adminComponents/LyricsForm";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const Page = () => {
   const [requests, setRequests] = useState([]);
   const [fetchAgain, setFetchAgain] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedLyrics, setSelectedLyrics] = useState("");
 
   const getRequests = async () => {
     setLoading(true);
@@ -38,15 +41,32 @@ const Page = () => {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     fetchData();
-
-    return () => {
-      // Cleanup function
-      // This will be called when the component is unmounted
-      // You can add cleanup logic here if needed
-    };
+    return () => {};
   }, [fetchAgain]);
 
+  const handleEdit = async (lyricsData, id) => {
+    const token = JSON.parse(localStorage.getItem("adminInfo"))?.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        id: id,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/lyrics?id=${id}`,
+      lyricsData,
+      config
+    );
+    setSelectedLyrics("");
+    setFetchAgain(!fetchAgain)
+    return data;
+  };
+  const backFunction = () => {
+    setSelectedLyrics("");
+    setFetchAgain(!fetchAgain);
+  };
   return (
     <>
       <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center">
@@ -54,12 +74,7 @@ const Page = () => {
       </h2>
 
       {loading ? (
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          width={"100%"}
-          mt={30}
-        >
+        <Box display={"flex"} justifyContent={"center"} width={"100%"} mt={30}>
           <Spinner
             thickness="4px"
             speed="0.65s"
@@ -85,12 +100,40 @@ const Page = () => {
                   lyricsData={lyrics}
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  selectedLyrics={selectedLyrics}
+                  setSelectedLyrics={setSelectedLyrics}
                 />
               ))}
             </div>
           </div>
         </div>
       )}
+      {selectedLyrics && <>
+              <Box>
+          <Stack
+            direction="row"
+            spacing={4}
+            display={"flex"}
+            width={"100%"}
+            justifyContent={"center"}
+          >
+            <Button
+              leftIcon={<FaArrowCircleLeft />}
+              colorScheme="red"
+              variant="solid"
+              onClick={() => backFunction()}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Box>
+        <LyricsForm
+          action={handleEdit}
+          editable={"true"}
+          lyricsData={selectedLyrics}
+          name={"edit"}
+        />
+      </>}
     </>
   );
 };

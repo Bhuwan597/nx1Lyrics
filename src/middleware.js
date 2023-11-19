@@ -25,7 +25,7 @@ export default async function middleware(request) {
     } catch (error) {}
   }
   if (path.startsWith("/api")) {
-    if (path === "/api/user/login" || path === "/api/user/logout") return
+    if (path === "/api/user/login" || path === "/api/user/logout" || ( path ==='/api/user/create' && request.method === 'POST')) return
     if(path.startsWith('/api/lyrics') && (request.method === 'GET' || request.method === 'POST')) return
     if(path.startsWith('/api/feedbacks') && request.method === 'POST' ) return
     const BearerToken = await request.headers.get("authorization");

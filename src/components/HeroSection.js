@@ -18,8 +18,8 @@ const HeroSection = ( ) => {
               lyrical companion.
             </p>
             <MainSearchBar />
-            <RecentlyUploaded/>
           </div>
+            <RecentlyUploaded/>
         </div>
       </section>
     </>

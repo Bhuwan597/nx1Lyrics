@@ -15,7 +15,7 @@ const page = async ({params}) => {
 export async function getLyrics(slug) {
   if (slug === 'favicon.ico') return;
   try {
-    const response = await fetch(`http://localhost:3000/api/lyrics/${slug}`);
+    const response = await fetch(`${process.env.HOST_URL}/api/lyrics/${slug}`);
     const data = await response.json();
     if(data.error) return null
     return data

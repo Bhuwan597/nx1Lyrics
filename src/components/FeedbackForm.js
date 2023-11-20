@@ -123,7 +123,7 @@ const FeedbackForm = () => {
           </div>
           <div class="p-2 w-full flex justify-center">
             <Button isLoading={loading} onClick={handleClick} colorScheme={"teal"}>
-              Button
+              Submit
             </Button>
           </div>
           <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">

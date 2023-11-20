@@ -10,10 +10,7 @@ if(!cached){
 const connect = async () => {
   if(cached.conn) return cached.conn
   if(!cached.promise){
-    const options = {
-      bufferCommands: false,
-    }
-    cached.promise = (await mongoose.connect(MONGODB_URI, options)).isObjectIdOrHexString((mongoose)=>{
+    cached.promise = (await mongoose.connect(MONGODB_URI)).isObjectIdOrHexString((mongoose)=>{
       return mongoose
     })
   }
